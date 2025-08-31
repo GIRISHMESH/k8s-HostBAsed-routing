@@ -199,7 +199,7 @@ spec:
     spec:
       containers:
         - name: mysql-init
-          image: mysql:8.1
+          image: bitnami/mysql:8.0
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
@@ -209,11 +209,16 @@ spec:
           command:
             - sh
             - -c
-            - >
-              mysql -h mysql-0.mysql-headless.nginx-stack.svc.cluster.local
-              -u root -p$MYSQL_ROOT_PASSWORD
-              -e "CREATE DATABASE IF NOT EXISTS appdb;"
+            - |
+              echo "Waiting for MySQL primary to be ready..."
+              until mysqladmin ping -h mysql-0.mysql-headless.nginx-stack.svc.cluster.local -u root -p"$MYSQL_ROOT_PASSWORD" --silent; do
+                echo "Waiting for MySQL..."
+                sleep 2
+              done
+              echo "MySQL is up. Creating database..."
+              mysql -h mysql-0.mysql-headless.nginx-stack.svc.cluster.local -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS appdb;"
       restartPolicy: OnFailure
+
 
 # =========================================================
 ##3 different applications-->nginx-web, app1, app2
@@ -588,6 +593,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
