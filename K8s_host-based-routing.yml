@@ -79,7 +79,7 @@ spec:
         fsGroup: 999
       containers:
         - name: mysql
-          image: mysql:8.1
+          image: mysql:8.1   #####official  but  won’t replicate data that's  why replicas:1
           ports:
             - containerPort: 3306
           env:
@@ -538,6 +538,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
