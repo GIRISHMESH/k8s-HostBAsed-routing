@@ -205,7 +205,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
-                  key: mysql-root-password
+                  key: root-password
           command:
             - sh
             - -c
@@ -588,6 +588,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
