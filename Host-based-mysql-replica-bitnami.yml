@@ -486,9 +486,13 @@ spec:
   tls:
     - hosts:
         - web.yourdomain.com
+      secretName: web-tls-secret        # Cert-manager creates this automatically
+    - hosts:
         - app1.yourdomain.com
+      secretName: app1-tls-secret
+    - hosts:
         - app2.yourdomain.com
-      secretName: nginx-tls-secret   # cert-manager will create this automatically
+      secretName: app2-tls-secret
   rules:
     - host: web.yourdomain.com
       http:
@@ -598,6 +602,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
