@@ -431,20 +431,30 @@ spec:
 
   ================================
 
-  apiVersion: cert-manager.io/v1
+##helm repo add jetstack https://charts.jetstack.io
+##helm repo update
+##helm install cert-manager jetstack/cert-manager \
+##  --namespace cert-manager --create-namespace \
+##  --version v1.16.0 \
+##  --set installCRDs=true
+
+
+
+
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: your-email@example.com
+    email: your-real-email@example.com    # replace with your email
     privateKeySecretRef:
       name: letsencrypt-prod-key
     solvers:
       - http01:
           ingress:
-            class: nginx
+            class: nginx   # must match your IngressClass
 
 
 # =========================================================
@@ -466,7 +476,7 @@ spec:
         - web.yourdomain.com
         - app1.yourdomain.com
         - app2.yourdomain.com
-      secretName: nginx-tls-secret   # your TLS cert must include all 3 hostnames
+      secretName: nginx-tls-secret   # cert-manager will create this automatically
   rules:
     - host: web.yourdomain.com
       http:
@@ -498,7 +508,6 @@ spec:
                 name: app2
                 port:
                   number: 80
-
 
 
 
@@ -577,6 +586,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
