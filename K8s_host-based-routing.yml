@@ -371,7 +371,7 @@ spec:
     spec:
       containers:
         - name: controller
-          image: k8s.gcr.io/ingress-nginx/controller:v1.10.0
+          image: registry.k8s.io/ingress-nginx/controller:v1.10.0
           args:
             - --controller-class=k8s.io/ingress-nginx
             - --publish-service=$(POD_NAMESPACE)/ingress-nginx-controller
@@ -521,7 +521,7 @@ spec:
       serviceAccountName: external-dns
       containers:
         - name: external-dns
-          image: k8s.gcr.io/external-dns/external-dns:v0.14.1
+          image: registry.k8s.io/external-dns/external-dns:v0.14.1
           args:
             - --source=service
             - --source=ingress
@@ -537,5 +537,6 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
