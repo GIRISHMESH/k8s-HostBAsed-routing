@@ -246,16 +246,19 @@ spec:
         app: nginx-web
     spec:
       initContainers:
-        - name: wait-for-mysql
-          image: busybox
-          command:
-            - sh
-            - -c
-            - >
-              until nc -z mysql.nginx-stack.svc.cluster.local 3306; do
-                echo "Waiting for MySQL...";
-                sleep 2;
-              done
+  - name: wait-for-mysql
+    image: bitnami/mysql:8.0
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: root-password
+    command:
+      - sh
+      - -c
+      - /opt/bitnami/scripts/mysql/wait-for-mysql.sh
+
       containers:
         - name: nginx
           image: nginx:latest
@@ -595,6 +598,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
