@@ -25,15 +25,17 @@ stringData:
   repl-password: replpass123
   app-password: applogin123
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: nginx-tls-secret
-  namespace: nginx-stack
-type: kubernetes.io/tls
-data:
-  tls.crt: <BASE64_CERT>
-  tls.key: <BASE64_KEY>
+
+# Remove this block completely
+##apiVersion: v1
+##kind: Secret
+##metadata:
+##  name: nginx-tls-secret
+##  namespace: nginx-stack
+##type: kubernetes.io/tls
+##data:
+##  tls.crt: <BASE64_CERT>
+##  tls.key: <BASE64_KEY>
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -586,6 +588,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
