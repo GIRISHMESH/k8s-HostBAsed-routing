@@ -227,7 +227,7 @@ spec:
             - sh
             - -c
             - >
-              until nc -z mysql 3306; do
+              until nc -z mysql.nginx-stack.svc.cluster.local 3306; do
                 echo "Waiting for MySQL...";
                 sleep 2;
               done
@@ -529,6 +529,7 @@ spec:
             - --provider=azure
             - --azure-resource-group=<DNS_RG_NAME>
             - --azure-subscription-id=<SUBSCRIPTION_ID>
+            - --azure-user-assigned-identity-client-id=<UAMI_CLIENT_ID>
             - --log-level=debug
           resources:
             requests:
@@ -537,6 +538,7 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
+
 
 
 
